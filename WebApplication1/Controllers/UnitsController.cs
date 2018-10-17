@@ -18,25 +18,11 @@ namespace TestAPI.Controllers
             TestAPI.Utils ut = new TestAPI.Utils();
             string response = "";
 
-            response = ut.getUnit(0);
+            response = ut.getUnit("0");
 
             return new string[] { "Response", response };
         }
 
-        /*
-        // GET api/Buildings/5
-        [HttpGet("{id}")]
-        public ActionResult<IEnumerable<string>> Get(string id)
-        {
-            TestAPI.Utils ut = new TestAPI.Utils();
-            string response = "";
-
-
-            response = ut.getUnit(Int32.Parse(id));
-
-            return new string[] { response };
-        }
-*/
 
 
         // GET api/Buildings/5
@@ -47,10 +33,11 @@ namespace TestAPI.Controllers
             string response = "";
 
 
-            response = ut.getUnit(Int32.Parse(id));
-            Models.Unit.Rootobject unit = new Models.Unit.Rootobject();
-            unit = Newtonsoft.Json.JsonConvert.DeserializeObject<TestAPI.Models.Unit.Rootobject>(response);
-            return new object[] { unit };
+            response = ut.getUnit(id);
+        //    Models.Unit.Rootobject unit = new Models.Unit.Rootobject();
+       //     unit = Newtonsoft.Json.JsonConvert.DeserializeObject<TestAPI.Models.Unit.Rootobject>(response);
+          //  return new object[] { unit };
+            return new string[] { response };
         }
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestAPI.Models
+namespace TestAPI.Models.Quicktype
 {
     // To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
     //
@@ -55,7 +55,7 @@ namespace TestAPI.Models
         public PvDataListProp[][] Prop { get; set; }
     }
 
-    public partial class PurpleProp
+    public partial class FieldDetail
     {
         [JsonProperty("FIELD", NullValueHandling = NullValueHandling.Ignore)]
         public string Field { get; set; }
@@ -67,7 +67,7 @@ namespace TestAPI.Models
         public string After { get; set; }
     }
 
-    public partial class FluffyProp
+    public partial class TProp
     {
         [JsonProperty("TLCRG_TREF", NullValueHandling = NullValueHandling.Ignore)]
         public string TlcrgTref { get; set; }
@@ -82,7 +82,7 @@ namespace TestAPI.Models
         public string TlcrgSeq { get; set; }
     }
 
-    public partial class TentacledProp
+    public partial class PropUpdateDetails
     {
         [JsonProperty("STATE", NullValueHandling = NullValueHandling.Ignore)]
         public string State { get; set; }
@@ -99,30 +99,30 @@ namespace TestAPI.Models
 
     public partial struct PropPropUnion
     {
-        public FluffyProp FluffyProp;
-        public PurpleProp[] PurplePropArray;
+        public TProp TProp;
+        public FieldDetail[] FieldDetailArray;
 
-        public static implicit operator PropPropUnion(FluffyProp FluffyProp) => new PropPropUnion { FluffyProp = FluffyProp };
-        public static implicit operator PropPropUnion(PurpleProp[] PurplePropArray) => new PropPropUnion { PurplePropArray = PurplePropArray };
+        public static implicit operator PropPropUnion(TProp TProp) => new PropPropUnion { TProp = TProp };
+        public static implicit operator PropPropUnion(FieldDetail[] FieldDetailArray) => new PropPropUnion { FieldDetailArray = FieldDetailArray };
     }
 
     public partial struct PvDataListProp
     {
         public PropPropUnion[] AnythingArray;
-        public TentacledProp TentacledProp;
+        public PropUpdateDetails PropUpdateDetails;
 
         public static implicit operator PvDataListProp(PropPropUnion[] AnythingArray) => new PvDataListProp { AnythingArray = AnythingArray };
-        public static implicit operator PvDataListProp(TentacledProp TentacledProp) => new PvDataListProp { TentacledProp = TentacledProp };
+        public static implicit operator PvDataListProp(PropUpdateDetails PropUpdateDetails) => new PvDataListProp { PropUpdateDetails = PropUpdateDetails };
     }
 
-   /* public partial class SaveProp
+    public partial class SaveProp
     {
-        public static SaveProp FromJson(string json) => JsonConvert.DeserializeObject<SaveProp>(json, TestAPI.Models.Converter.Settings);
+        public static SaveProp FromJson(string json) => JsonConvert.DeserializeObject<SaveProp>(json, TestAPI.Models.Quicktype.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this SaveProp self) => JsonConvert.SerializeObject(self, TestAPI.Models.Converter.Settings);
+        public static string ToJson(this SaveProp self) => JsonConvert.SerializeObject(self, TestAPI.Models.Quicktype.Converter.Settings);
     }
 
     internal static class Converter
@@ -139,6 +139,8 @@ namespace TestAPI.Models
         };
     }
 
+    
+
     internal class PvDataListPropConverter : JsonConverter
     {
         public override bool CanConvert(Type t) => t == typeof(PvDataListProp) || t == typeof(PvDataListProp?);
@@ -148,8 +150,8 @@ namespace TestAPI.Models
             switch (reader.TokenType)
             {
                 case JsonToken.StartObject:
-                    var objectValue = serializer.Deserialize<TentacledProp>(reader);
-                    return new PvDataListProp { TentacledProp = objectValue };
+                    var objectValue = serializer.Deserialize<PropUpdateDetails>(reader);
+                    return new PvDataListProp { PropUpdateDetails = objectValue };
                 case JsonToken.StartArray:
                     var arrayValue = serializer.Deserialize<PropPropUnion[]>(reader);
                     return new PvDataListProp { AnythingArray = arrayValue };
@@ -165,9 +167,9 @@ namespace TestAPI.Models
                 serializer.Serialize(writer, value.AnythingArray);
                 return;
             }
-            if (value.TentacledProp != null)
+            if (value.PropUpdateDetails != null)
             {
-                serializer.Serialize(writer, value.TentacledProp);
+                serializer.Serialize(writer, value.PropUpdateDetails);
                 return;
             }
             throw new Exception("Cannot marshal type PvDataListProp");
@@ -175,7 +177,7 @@ namespace TestAPI.Models
 
         public static readonly PvDataListPropConverter Singleton = new PvDataListPropConverter();
     }
-
+    
     internal class PropPropUnionConverter : JsonConverter
     {
         public override bool CanConvert(Type t) => t == typeof(PropPropUnion) || t == typeof(PropPropUnion?);
@@ -185,11 +187,11 @@ namespace TestAPI.Models
             switch (reader.TokenType)
             {
                 case JsonToken.StartObject:
-                    var objectValue = serializer.Deserialize<FluffyProp>(reader);
-                    return new PropPropUnion { FluffyProp = objectValue };
+                    var objectValue = serializer.Deserialize<TProp>(reader);
+                    return new PropPropUnion { TProp = objectValue };
                 case JsonToken.StartArray:
-                    var arrayValue = serializer.Deserialize<PurpleProp[]>(reader);
-                    return new PropPropUnion { PurplePropArray = arrayValue };
+                    var arrayValue = serializer.Deserialize<FieldDetail[]>(reader);
+                    return new PropPropUnion { FieldDetailArray = arrayValue };
             }
             throw new Exception("Cannot unmarshal type PropPropUnion");
         }
@@ -197,20 +199,21 @@ namespace TestAPI.Models
         public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
         {
             var value = (PropPropUnion)untypedValue;
-            if (value.PurplePropArray != null)
+            if (value.FieldDetailArray != null)
             {
-                serializer.Serialize(writer, value.PurplePropArray);
+                serializer.Serialize(writer, value.FieldDetailArray);
                 return;
             }
-            if (value.FluffyProp != null)
+            if (value.TProp != null)
             {
-                serializer.Serialize(writer, value.FluffyProp);
+                serializer.Serialize(writer, value.TProp);
                 return;
             }
             throw new Exception("Cannot marshal type PropPropUnion");
         }
 
         public static readonly PropPropUnionConverter Singleton = new PropPropUnionConverter();
-    }*/
+    }
+    
 }
 

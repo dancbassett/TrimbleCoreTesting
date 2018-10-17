@@ -39,9 +39,7 @@ namespace WebApplication1
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-   
-           
-
+            services.Configure<TestAPI.Models.AppSettings>(Configuration.GetSection("AppSettings"));
 
         }
 
@@ -65,7 +63,7 @@ namespace WebApplication1
             var msg = Configuration["messageLogin"];
                 var username = Configuration["username"];
                 var password = Configuration["password"];
-            await context.Response.WriteAsync(msg + "Username: '" + username + "' Password: '" + password +"'");
+           // await context.Response.WriteAsync(msg + "Username: '" + username + "' Password: '" + password +"'");
         });
 
 

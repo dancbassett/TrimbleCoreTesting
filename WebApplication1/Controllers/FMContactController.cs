@@ -9,46 +9,38 @@ namespace TestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class FMContactController : ControllerBase
     {
         // GET api/Buildings
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
-            Utils ut = new Utils();
-            string session_id = ut.login();
+            TestAPI.Utils ut = new TestAPI.Utils();
+            string response = "";
 
-            return new string[] { "Session ID: ", session_id };
+           // Models.FMContact.GetFMContact.Rootobject fMContact = new Models.FMContact.GetFMContact.Rootobject();
+            response = ut.getFMCont("");
+          //  fMContact = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.FMContact.GetFMContact.Rootobject>(response);
+            return  response ;
         }
 
-        /*
-                // GET api/Buildings/5
-                [HttpGet("{id}")]
-                public ActionResult<IEnumerable<string>> Get(int id)
-                {
-                    TestAPI.Utils ut = new TestAPI.Utils();
-                    string response = "";
+    
 
-                  //  response = ut.getProp(id);
-
-                    return new string[] { response };
-                }
-        */
         // GET api/Buildings/5
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<object>> Get(string id)
         {
             TestAPI.Utils ut = new TestAPI.Utils();
             string response = "";
-
-
-            response = ut.getUnit(id);
-            Models.Unit unit = new Models.Unit();
-            unit = Newtonsoft.Json.JsonConvert.DeserializeObject<TestAPI.Models.Unit>(response);
-            return new object[] { unit };
+            Models.FMContact.GetFMContact.Rootobject fMContact = new Models.FMContact.GetFMContact.Rootobject();
+            response = ut.getFMCont(id);
+            fMContact = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.FMContact.GetFMContact.Rootobject>(response);
+            return new object[] { "Response", fMContact };
+ 
         }
 
 
+        
 
 
         // POST api/Buildings

@@ -9,7 +9,7 @@ namespace TestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OwnersController : ControllerBase
+    public class DocumentController : ControllerBase
     {
         // GET api/Buildings
         [HttpGet]
@@ -17,27 +17,13 @@ namespace TestAPI.Controllers
         {
             TestAPI.Utils ut = new TestAPI.Utils();
             string response = "";
-            response = ut.getOwner("0");
-            //      response = ut.saveProp();
-            //response = ut.getUnit(0);
+
+            response = ut.getDoc("");
 
             return new string[] { "Response", response };
         }
 
         /*
-                // GET api/Buildings/5
-                [HttpGet("{id}")]
-                public ActionResult<IEnumerable<string>> Get(string id)
-                {
-                    TestAPI.Utils ut = new TestAPI.Utils();
-                    string response = "";
-
-
-                    response = ut.getUnit(Int32.Parse(id));
-
-                    return new string[] { response };
-                }*/
-
         // GET api/Buildings/5
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<string>> Get(string id)
@@ -46,14 +32,27 @@ namespace TestAPI.Controllers
             string response = "";
 
 
-            response = ut.getOwner(id);
-            //  Models.Unit unit = new Models.Unit();
-        //    Models.Owner owner = new Models.Owner();
-          //  owner = Newtonsoft.Json.JsonConvert.DeserializeObject<TestAPI.Models.Owner>(response);
-         //   return new object[] { owner };
-            return new string[] { "Response", response };
-        }
+            response = ut.getUnit(Int32.Parse(id));
 
+            return new string[] { response };
+        }
+*/
+
+
+        // GET api/Buildings/5
+        [HttpGet("{id}")]
+        public ActionResult<string> Get(string id)
+        {
+            TestAPI.Utils ut = new TestAPI.Utils();
+            string response = "";
+            
+
+
+            response = ut.saveDoc(id);
+         //   Models.Unit.Rootobject unit = new Models.Unit.Rootobject();
+          //  unit = Newtonsoft.Json.JsonConvert.DeserializeObject<TestAPI.Models.Unit.Rootobject>(response);
+            return  response ;
+        }
 
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace TestAPI.Models
 {
@@ -150,21 +151,14 @@ namespace TestAPI.Models
 
         public class PROFILE
         {
-            public string PR_ID { get; set; }
+            public string PR_SNAM { get; set; }
         }
-
-
-
-
-
 
 
 
 
         public class saveProp
         {
-
-
             public class cProperty
             {
                 public string sessionID { get; set; }
@@ -175,7 +169,7 @@ namespace TestAPI.Models
                 public string PV_LANGUAGE { get; set; }
                 public string PV_PURPOSE { get; set; }
            //     public TL TL { get; set; }
-                public List<PV_DATA_LIST> PV_DATA_LIST { get; set; }
+                public  PV_DATA_LIST PV_DATA_LIST { get; set; }
                 public PV_EXTRA PV_EXTRA { get; set; }
 
             }
@@ -183,7 +177,7 @@ namespace TestAPI.Models
             public class PV_DATA_LIST
             {
 
-                public List<PROP> PROP { get; set; }
+                public ArrayList PROP { get; set; }
             }
 
             public class PROP
@@ -191,17 +185,16 @@ namespace TestAPI.Models
                 public string STATE { get; set; }
                 public string CRC { get; set; }
 
-                public TL[] TLS { get; set; }
+                    public TL[] TLS { get; set; }
+                public ArrayList prpDets { get; set; }
 
-                // public List<FieldDetails> fieldList { get; set; }
+                 public List<FieldDetails> fieldList { get; set; }
             }
 
             public class PV_EXTRA
             {
                 public string COMMIT { get; set; }
             }
-
-
 
             public class FieldDetails
             {
@@ -211,8 +204,6 @@ namespace TestAPI.Models
 
             }
 
-
-
             public class TL
             {
                 public string TLCRG_TREF { get; set; }
@@ -220,15 +211,6 @@ namespace TestAPI.Models
                 public string TLCRG_CTYPE { get; set; }
                 public string TLCRG_SEQ { get; set; }
             }
-
-
-
-
-
-        }
-
-
-
-
+       }
     }
 }

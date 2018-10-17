@@ -146,7 +146,7 @@ namespace TestAPI.Models
 
         public class PROFILE
         {
-            public string PR_ID { get; set; }
+            public string UN_UREF { get; set; }
         }
 
 
